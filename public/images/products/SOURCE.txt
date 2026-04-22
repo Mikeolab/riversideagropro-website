@@ -1,10 +1,11 @@
-Product card photos (illustrative stock — replace with Riverside’s own photos when available).
+Product card photos: illustrative stock (replace with Riverside’s own photography when ready).
+Unsplash license: https://unsplash.com/license (commercial use OK; attribution optional).
 
-Source: Unsplash (https://unsplash.com/license) — free for commercial use; attribution appreciated but not required.
+Farm / production context (pond fish, shed poultry, pen pigs, crop pepper, larvae tray, hay feed):
 
-- fish.jpg — https://unsplash.com/photos/pw8vGbh4Bu0
-- poultry.jpg — https://unsplash.com/photos/4W8FgDVyUME
-- pigs.jpg — https://unsplash.com/photos/ZE8TEMZNyTA
-- pepper.jpg — https://unsplash.com/photos/31nWomqWZf0
-- larvae.jpg — https://unsplash.com/photos/-rxwt4ZvSz4
-- animal-feed.jpg — https://unsplash.com/photos/w-iVGVdZvt4
+- fish.jpg — fish in pond water — https://unsplash.com/photos/uJ8VncOtwyU
+- poultry.jpg — hen in poultry house (concrete floor) — https://unsplash.com/photos/MzDuoqAGFyc
+- pigs.jpg — pigs in pen — https://unsplash.com/photos/ZuixmDWAHq8
+- pepper.jpg — chili peppers on the plant — https://unsplash.com/photos/HmpIY5MJ2KE
+- larvae.jpg — insect larvae in trays (feed production) — https://unsplash.com/photos/2JMZkCDg2Ks
+- animal-feed.jpg — stacked hay bales (livestock feed / forage) — https://unsplash.com/photos/xtoxMDfqdyA

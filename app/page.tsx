@@ -17,43 +17,43 @@ const productCards = [
   {
     title: 'Fish',
     image: '/images/products/fish.jpg',
-    alt: 'Fresh whole fish on ice',
-    body: 'Farm-raised fish for homes, restaurants, and bulk buyers. Message us for species, sizes, and today’s availability.',
+    alt: 'Fish swimming in a farm pond',
+    body: 'Farm-raised fish from our ponds for homes, restaurants, and bulk buyers. Message us for species, sizes, and today’s availability.',
     badge: 'Available now',
   },
   {
     title: 'Fowls & poultry',
     image: '/images/products/poultry.jpg',
-    alt: 'Hen on grass at a small farm',
-    body: 'Live birds, eggs, and poultry products raised with care — suitable for families and small businesses.',
+    alt: 'Hen inside a modern poultry house',
+    body: 'Live birds, eggs, and poultry from managed farm housing — suitable for families, retailers, and small businesses.',
     badge: 'Available now',
   },
   {
     title: 'Pigs',
     image: '/images/products/pigs.jpg',
-    alt: 'Young pigs on a farm',
+    alt: 'Pigs in a farm pen',
     body: 'Quality pigs for meat and breeding enquiries. Availability varies — contact us for current stock and pricing.',
     badge: 'Enquire on WhatsApp',
   },
   {
     title: 'Pepper & produce',
     image: '/images/products/pepper.jpg',
-    alt: 'Fresh red peppers',
-    body: 'Fresh farm peppers and seasonal produce when in harvest. Great for retail and kitchen supply.',
+    alt: 'Chili peppers growing on the farm',
+    body: 'Fresh peppers straight from the field when in season — great for retail, kitchens, and bulk buyers.',
     badge: 'Seasonal — ask us',
   },
   {
     title: 'Larvae (feed protein)',
     image: '/images/products/larvae.jpg',
-    alt: 'Mealworms as high-protein animal feed ingredient',
-    body: 'Insect larvae (e.g. mealworms) as a protein-rich ingredient for fish and livestock feeding programmes. Bulk and trial orders by arrangement.',
+    alt: 'Larvae raised in trays for animal feed',
+    body: 'Insect larvae as a high-protein feed ingredient for fish and livestock programmes. Bulk and trial orders by arrangement.',
     badge: 'By arrangement',
   },
   {
     title: 'Fish & animal feeds',
     image: '/images/products/animal-feed.jpg',
-    alt: 'Grains and feed ingredients',
-    body: 'Aquaculture and livestock feeds — including fish feed and formulated rations. Tell us your animal type and we will advise what we can supply.',
+    alt: 'Hay bales stacked for livestock feed',
+    body: 'Forage, rations, and aquaculture feeds — including bagged fish feed where stocked. Tell us your animal type and we will advise what we can supply.',
     badge: 'Available now',
   },
 ] as const
@@ -280,8 +280,8 @@ export default function Home() {
           </motion.h3>
 
           <p className="text-center text-stone-600 text-sm max-w-2xl mx-auto mb-10">
-            Photos below are professional stock images so each category reads clearly online. Swap them anytime for your own farm pictures — same filenames in{' '}
-            <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">public/images/products/</code>.
+            Images below use pond, poultry-house, pen, crop, larvae-tray, and hay-bale stock photos so each line matches real farm work. Replace with your own shots in{' '}
+            <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">public/images/products/</code> when you have them.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
