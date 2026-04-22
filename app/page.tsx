@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
@@ -13,6 +13,70 @@ function publicFile(path: string) {
 
 /** 12 photos = full rows (3×4 on laptop, 4×3 on wide) — avoids a single orphan tile. */
 const GALLERY_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
+
+/** Hero rotator lines (gentle crossfade; respects prefers-reduced-motion). */
+const HERO_LOCATION_LINES = [
+  'Sango-Ota · Fresh from our farm',
+  'Ibadan · Fresh from our farm',
+] as const
+
+const SANGO_OTA_ADDRESS =
+  'Riverside Plot 1 Adesola Street, Arobieye Sango/Ota, Ogun State'
+
+/** Replace with your published Ibadan street when ready — keeps one source of truth. */
+const IBADAN_ADDRESS_DETAIL =
+  'Ibadan, Oyo State — WhatsApp us for the full address, map pin, and pickup or visit arrangements.'
+
+function HeroLocationTagline() {
+  const [index, setIndex] = useState(0)
+  /** null until mounted — avoids SSR/client mismatch; treat null as “allow motion”. */
+  const [reduceMotion, setReduceMotion] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const apply = () => setReduceMotion(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+
+  useEffect(() => {
+    if (reduceMotion !== false) return
+    const id = window.setInterval(
+      () => setIndex((i) => (i + 1) % HERO_LOCATION_LINES.length),
+      5200
+    )
+    return () => window.clearInterval(id)
+  }, [reduceMotion])
+
+  if (reduceMotion === true) {
+    return (
+      <p className="text-riverside-light-green/95 text-sm font-semibold uppercase tracking-[0.18em] mb-4 px-2">
+        Sango-Ota & Ibadan · Fresh from our farm
+      </p>
+    )
+  }
+
+  return (
+    <div
+      className="relative mb-4 flex min-h-[1.75rem] md:min-h-[2rem] items-center justify-center px-2"
+      aria-live="polite"
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.p
+          key={HERO_LOCATION_LINES[index]}
+          className="text-riverside-light-green/95 text-sm font-semibold uppercase tracking-[0.18em] text-center absolute inset-x-0"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {HERO_LOCATION_LINES[index]}
+        </motion.p>
+      </AnimatePresence>
+    </div>
+  )
+}
 
 function GalleryTile({ num, index }: { num: number; index: number }) {
   const [failed, setFailed] = useState(false)
@@ -220,14 +284,13 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="rounded-3xl p-10 md:p-14 max-w-3xl mx-auto bg-black/45 backdrop-blur-md border border-white/15 shadow-[0_25px_80px_rgba(0,0,0,0.35)]"
             >
-              <motion.p
-                className="text-riverside-light-green/95 text-sm font-semibold uppercase tracking-[0.2em] mb-4"
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.15 }}
               >
-                Sango-Ota · Fresh from our farm
-              </motion.p>
+                <HeroLocationTagline />
+              </motion.div>
               <motion.h1 
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-semibold text-white mb-4 tracking-tight"
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -468,39 +531,77 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Where to find us — Shalomba style */}
+      {/* Where to find us */}
       <section id="contact" className="py-20 px-4 section-soft">
-        <div className="container mx-auto max-w-3xl">
+        <div className="container mx-auto max-w-4xl">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-display font-semibold text-riverside-dark-green text-center mb-8"
+            className="text-3xl md:text-4xl font-display font-semibold text-riverside-dark-green text-center mb-3"
           >
-            Where to find us?
+            Where to find us
           </motion.h2>
-          
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center text-stone-600 text-sm md:text-base max-w-2xl mx-auto mb-10 leading-relaxed"
+          >
+            <strong className="text-riverside-dark-green font-semibold">Physical locations</strong> below are where we operate from.
+            We also <strong className="text-riverside-dark-green font-semibold">deliver across Nigeria and can arrange international shipping</strong> for suitable products — use WhatsApp to confirm what you need and logistics.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 gap-4 md:gap-6 mb-10"
+          >
+            <div className="rounded-2xl border border-stone-200/90 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+              <p className="text-xs font-bold uppercase tracking-wider text-riverside-accent mb-1">Ogun State</p>
+              <h3 className="font-display text-lg font-semibold text-riverside-dark-green mb-2">Sango-Ota — main farm</h3>
+              <p className="text-riverside-dark-green/90 text-sm leading-relaxed">{SANGO_OTA_ADDRESS}</p>
+            </div>
+            <div className="rounded-2xl border border-stone-200/90 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+              <p className="text-xs font-bold uppercase tracking-wider text-riverside-accent mb-1">Oyo State</p>
+              <h3 className="font-display text-lg font-semibold text-riverside-dark-green mb-2">Ibadan</h3>
+              <p className="text-riverside-dark-green/90 text-sm leading-relaxed">{IBADAN_ADDRESS_DETAIL}</p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="rounded-2xl border border-riverside-dark-green/20 bg-riverside-dark-green/[0.06] px-5 py-4 mb-10 text-center text-sm text-riverside-dark-green leading-relaxed"
+          >
+            <span className="font-semibold">Delivery note:</span> Not all products travel equally well; tell us your location (local or abroad) on WhatsApp and we will advise availability, packaging, and timing.
+          </motion.div>
+
           <motion.ul
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="space-y-4 text-riverside-dark-green"
+            className="space-y-3 text-riverside-dark-green max-w-xl mx-auto text-sm md:text-base"
           >
-            <li className="flex gap-3">
-              <span className="text-riverside-accent font-bold">•</span>
-              <span><strong>Farm:</strong> Riverside Plot 1 Adesola Street, Arobieye Sango/Ota</span>
+            <li className="flex gap-3 justify-center md:justify-start">
+              <span className="text-riverside-accent font-bold shrink-0">•</span>
+              <span><strong>WhatsApp:</strong>{' '}
+                <a href="https://wa.me/2349128815164" target="_blank" rel="noopener noreferrer" className="text-riverside-green hover:underline font-semibold">09128815164</a>
+              </span>
             </li>
-            <li className="flex gap-3">
-              <span className="text-riverside-accent font-bold">•</span>
-              <span><strong>WhatsApp:</strong> Order and inquire via <a href="https://wa.me/2349128815164" target="_blank" rel="noopener noreferrer" className="text-riverside-green hover:underline font-semibold">09128815164</a></span>
+            <li className="flex gap-3 justify-center md:justify-start">
+              <span className="text-riverside-accent font-bold shrink-0">•</span>
+              <span><strong>Email:</strong>{' '}
+                <a href="mailto:riversidagroprolmt@outlook.com" className="text-riverside-green hover:underline">riversidagroprolmt@outlook.com</a>
+              </span>
             </li>
-            <li className="flex gap-3">
-              <span className="text-riverside-accent font-bold">•</span>
-              <span><strong>Email:</strong> <a href="mailto:riversidagroprolmt@outlook.com" className="text-riverside-green hover:underline">riversidagroprolmt@outlook.com</a></span>
-            </li>
-            <li className="flex gap-3">
-              <span className="text-riverside-accent font-bold">•</span>
-              <span><strong>Phone:</strong> <a href="tel:+2349128815164" className="text-riverside-green hover:underline">09128815164</a></span>
+            <li className="flex gap-3 justify-center md:justify-start">
+              <span className="text-riverside-accent font-bold shrink-0">•</span>
+              <span><strong>Phone:</strong>{' '}
+                <a href="tel:+2349128815164" className="text-riverside-green hover:underline">09128815164</a>
+              </span>
             </li>
           </motion.ul>
 
@@ -528,9 +629,14 @@ export default function Home() {
           <p className="text-white/90 text-sm leading-relaxed">
             <strong>Mission:</strong> To supply fresh fish, poultry, pigs, produce, larvae for feed, and quality fish and animal feeds — with honest service and farming practices our customers can rely on.
           </p>
-          <p className="text-white/90 text-sm">
-            <strong>Contact:</strong> Riverside Plot 1 Adesola Street, Arobieye Sango/Ota — riversidagroprolmt@outlook.com — 09128815164
-          </p>
+          <div className="text-white/90 text-sm space-y-2 text-left max-w-xl mx-auto">
+            <p>
+              <strong>Locations:</strong> {SANGO_OTA_ADDRESS} · {IBADAN_ADDRESS_DETAIL}
+            </p>
+            <p>
+              <strong>Reach us:</strong> riversidagroprolmt@outlook.com · 09128815164 · nationwide &amp; international delivery by arrangement
+            </p>
+          </div>
           <div className="pt-4 border-t border-white/20">
             <p className="text-white/80 text-sm">
               © {new Date().getFullYear()} Riverside Agropro Limited. Director: Fadeyibi Kayode.
