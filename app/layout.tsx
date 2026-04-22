@@ -15,8 +15,9 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
-  title: 'Riverside Agropro Limited - Premium Fish & Poultry Farm',
-  description: 'Riverside Agropro Limited - Your trusted source for premium fish, fowls, and agricultural products. Quality farming, sustainable practices.',
+  title: 'Riverside Agropro Limited — Fish, poultry, feeds & farm produce',
+  description:
+    'Riverside Agropro Limited: fish, fowls, pigs, peppers, larvae for animal feed, and fish & livestock feeds. Farm in Sango-Ota — order on WhatsApp.',
 }
 
 export default function RootLayout({

@@ -12,6 +12,52 @@ const navLinks = [
   { href: '#contact', label: 'Contact' },
 ] as const
 
+/** Product photos: illustrative stock (Unsplash). Replace with Riverside’s own shots when available — see public/images/products/SOURCE.txt */
+const productCards = [
+  {
+    title: 'Fish',
+    image: '/images/products/fish.jpg',
+    alt: 'Fresh whole fish on ice',
+    body: 'Farm-raised fish for homes, restaurants, and bulk buyers. Message us for species, sizes, and today’s availability.',
+    badge: 'Available now',
+  },
+  {
+    title: 'Fowls & poultry',
+    image: '/images/products/poultry.jpg',
+    alt: 'Hen on grass at a small farm',
+    body: 'Live birds, eggs, and poultry products raised with care — suitable for families and small businesses.',
+    badge: 'Available now',
+  },
+  {
+    title: 'Pigs',
+    image: '/images/products/pigs.jpg',
+    alt: 'Young pigs on a farm',
+    body: 'Quality pigs for meat and breeding enquiries. Availability varies — contact us for current stock and pricing.',
+    badge: 'Enquire on WhatsApp',
+  },
+  {
+    title: 'Pepper & produce',
+    image: '/images/products/pepper.jpg',
+    alt: 'Fresh red peppers',
+    body: 'Fresh farm peppers and seasonal produce when in harvest. Great for retail and kitchen supply.',
+    badge: 'Seasonal — ask us',
+  },
+  {
+    title: 'Larvae (feed protein)',
+    image: '/images/products/larvae.jpg',
+    alt: 'Mealworms as high-protein animal feed ingredient',
+    body: 'Insect larvae (e.g. mealworms) as a protein-rich ingredient for fish and livestock feeding programmes. Bulk and trial orders by arrangement.',
+    badge: 'By arrangement',
+  },
+  {
+    title: 'Fish & animal feeds',
+    image: '/images/products/animal-feed.jpg',
+    alt: 'Grains and feed ingredients',
+    body: 'Aquaculture and livestock feeds — including fish feed and formulated rations. Tell us your animal type and we will advise what we can supply.',
+    badge: 'Available now',
+  },
+] as const
+
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -156,7 +202,7 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
               >
-                Premium fish and poultry — raised with care, ready for your table or your business.
+                Fish, poultry, pigs, fresh produce, larvae for feed, and aquaculture & livestock feeds — one farm, WhatsApp ordering.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -216,9 +262,11 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-riverside-dark-green text-lg text-center max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Riverside Agropro Limited is a leading agricultural enterprise dedicated to providing 
-            premium quality fish, poultry, and agricultural products. We combine modern farming 
-            techniques with sustainable practices to deliver the best to our customers. Director: <span className="text-riverside-accent font-semibold">Fadeyibi Kayode</span>.
+            Riverside Agropro Limited supplies live and fresh farm products — fish, fowls, pigs, peppers — plus{' '}
+            <strong className="font-semibold text-riverside-dark-green">protein larvae for feeding</strong> and{' '}
+            <strong className="font-semibold text-riverside-dark-green">fish feeds and animal feeds</strong> for growers. 
+            We combine practical farming with dependable supply for households and businesses. Director:{' '}
+            <span className="text-riverside-accent font-semibold">Fadeyibi Kayode</span>.
           </motion.p>
 
           <motion.h3
@@ -231,55 +279,31 @@ export default function Home() {
             Our products
           </motion.h3>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="relative h-48 rounded-xl overflow-hidden mb-4">
-                <Image src="/images/farm-image-2.jpeg" alt="Fish" fill className="object-cover" />
-              </div>
-              <h3 className="text-xl font-bold text-riverside-dark-green mb-2">Fish</h3>
-              <p className="text-riverside-dark-green text-sm leading-relaxed">
-                Premium quality fish, fresh from our farm. Various species suitable for both commercial and personal use.
-              </p>
-              <p className="text-riverside-accent font-semibold mt-2 text-sm">Available Now</p>
-            </motion.div>
+          <p className="text-center text-stone-600 text-sm max-w-2xl mx-auto mb-10">
+            Photos below are professional stock images so each category reads clearly online. Swap them anytime for your own farm pictures — same filenames in{' '}
+            <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">public/images/products/</code>.
+          </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-center"
-            >
-              <div className="relative h-48 rounded-xl overflow-hidden mb-4">
-                <Image src="/images/farm-image-3.jpeg" alt="Poultry" fill className="object-cover" />
-              </div>
-              <h3 className="text-xl font-bold text-riverside-dark-green mb-2">Fowls & Poultry</h3>
-              <p className="text-riverside-dark-green text-sm leading-relaxed">
-                High-quality poultry including live birds, eggs, and processed products. Raised with care and attention to quality.
-              </p>
-              <p className="text-riverside-accent font-semibold mt-2 text-sm">Available Now</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-center"
-            >
-              <div className="relative h-48 rounded-xl overflow-hidden mb-4 bg-riverside-light-green/20 flex items-center justify-center">
-                <span className="text-5xl">🌾</span>
-              </div>
-              <h3 className="text-xl font-bold text-riverside-dark-green mb-2">More Coming Soon</h3>
-              <p className="text-riverside-dark-green text-sm leading-relaxed">
-                We're continuously expanding our product range. Stay tuned for more agricultural products and services.
-              </p>
-            </motion.div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {productCards.map((p, i) => (
+              <motion.article
+                key={p.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+                className="text-left bg-white rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md hover:border-stone-300/90 transition-all overflow-hidden flex flex-col"
+              >
+                <div className="relative h-52 w-full">
+                  <Image src={p.image} alt={p.alt} fill className="object-cover" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" />
+                </div>
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-lg font-display font-semibold text-riverside-dark-green mb-2">{p.title}</h3>
+                  <p className="text-riverside-dark-green/90 text-sm leading-relaxed flex-1">{p.body}</p>
+                  <p className="text-riverside-accent font-semibold mt-3 text-sm">{p.badge}</p>
+                </div>
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>
@@ -303,8 +327,8 @@ export default function Home() {
           />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { num: '2+', label: 'product categories' },
-              { num: '24/7', label: 'fresh & available' },
+              { num: '6+', label: 'product lines' },
+              { num: '24/7', label: 'WhatsApp orders' },
               { num: '100+', label: 'happy customers' },
               { num: '1', label: 'mission: quality' },
             ].map((stat, i) => (
@@ -342,7 +366,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center text-stone-600 max-w-2xl mx-auto mb-12 text-sm md:text-base"
           >
-            Real feedback from people who buy our fish and poultry.
+            Real feedback from people who buy our fish, poultry, and farm supplies.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -464,7 +488,7 @@ export default function Home() {
       <footer className="py-12 px-4 bg-riverside-dark-green text-white">
         <div className="container mx-auto max-w-3xl text-center space-y-6">
           <p className="text-white/90 text-sm leading-relaxed">
-            <strong>Mission:</strong> To provide premium fish, poultry, and agricultural products through sustainable farming practices. We aim to nourish our community with quality produce while building a resilient and modern farm enterprise.
+            <strong>Mission:</strong> To supply fresh fish, poultry, pigs, produce, larvae for feed, and quality fish and animal feeds — with honest service and farming practices our customers can rely on.
           </p>
           <p className="text-white/90 text-sm">
             <strong>Contact:</strong> Riverside Plot 1 Adesola Street, Arobieye Sango/Ota — riversidagroprolmt@outlook.com — 09128815164
