@@ -11,6 +11,47 @@ function publicFile(path: string) {
   return `${root}${p}`
 }
 
+/** 12 photos = full rows (3×4 on laptop, 4×3 on wide) — avoids a single orphan tile. */
+const GALLERY_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
+
+function GalleryTile({ num, index }: { num: number; index: number }) {
+  const [failed, setFailed] = useState(false)
+  const src = publicFile(`/images/farm-image-${num}.jpeg`)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.96 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.45, delay: Math.min(index * 0.04, 0.4) }}
+      className="bg-stone-100 overflow-hidden aspect-[4/3] sm:aspect-square group relative rounded-xl border border-stone-200 shadow-sm hover:shadow-md transition-shadow"
+    >
+      {failed ? (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 text-center text-stone-500 text-sm">
+          <span className="text-2xl" aria-hidden>📷</span>
+          <span>Photo {num} did not load</span>
+          <button
+            type="button"
+            className="text-riverside-green font-semibold text-xs underline"
+            onClick={() => setFailed(false)}
+          >
+            Retry
+          </button>
+        </div>
+      ) : (
+        <Image
+          src={src}
+          alt={`Riverside farm photo ${num}`}
+          fill
+          sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          onError={() => setFailed(true)}
+        />
+      )}
+    </motion.div>
+  )
+}
+
 const navLinks = [
   { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
@@ -407,31 +448,21 @@ export default function Home() {
       <section id="gallery" className="py-20 px-4 section-light">
         <div className="container mx-auto">
           <motion.h2 
-            className="text-4xl md:text-5xl font-display font-semibold text-riverside-dark-green text-center mb-12"
+            className="text-4xl md:text-5xl font-display font-semibold text-riverside-dark-green text-center mb-4"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
             Our Farm Gallery
           </motion.h2>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((num, index) => (
-              <motion.div
-                key={num}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white overflow-hidden aspect-square cursor-pointer group relative rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <Image 
-                  src={publicFile(`/images/farm-image-${num}.jpeg`)}
-                  alt={`Farm Image ${num}`}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
+          <p className="text-center text-stone-600 text-sm max-w-2xl mx-auto mb-10">
+            Twelve shots in a balanced grid (2 columns on phones, 3 on tablets, 4 on large screens) so every row is full — no single image stranded on its own line.
+          </p>
+
+          {/* 12 tiles: 2×6 / 3×4 / 4×3 — editorial spacing, uniform rhythm */}
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 max-w-6xl mx-auto">
+            {GALLERY_NUMBERS.map((num, index) => (
+              <GalleryTile key={num} num={num} index={index} />
             ))}
           </div>
         </div>
