@@ -4,6 +4,13 @@ import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
+/** Prefix for static files in /public when deploying with next.config basePath (e.g. GitHub Pages project site). */
+function publicFile(path: string) {
+  const root = process.env.NEXT_PUBLIC_BASE_PATH || ''
+  const p = path.startsWith('/') ? path : `/${path}`
+  return `${root}${p}`
+}
+
 const navLinks = [
   { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
@@ -154,7 +161,7 @@ export default function Home() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
           <Image 
-            src="/images/farm-image-1.jpeg" 
+            src={publicFile('/images/farm-image-1.jpeg')}
             alt="Riverside Agropro Farm" 
             fill
             className="object-cover brightness-110"
@@ -295,7 +302,7 @@ export default function Home() {
                 className="text-left bg-white rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md hover:border-stone-300/90 transition-all overflow-hidden flex flex-col"
               >
                 <div className="relative h-52 w-full">
-                  <Image src={p.image} alt={p.alt} fill className="object-cover" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" />
+                  <Image src={publicFile(p.image)} alt={p.alt} fill className="object-cover" sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" />
                 </div>
                 <div className="p-5 flex flex-col flex-1">
                   <h3 className="text-lg font-display font-semibold text-riverside-dark-green mb-2">{p.title}</h3>
@@ -419,7 +426,7 @@ export default function Home() {
                 className="bg-white overflow-hidden aspect-square cursor-pointer group relative rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
               >
                 <Image 
-                  src={`/images/farm-image-${num}.jpeg`}
+                  src={publicFile(`/images/farm-image-${num}.jpeg`)}
                   alt={`Farm Image ${num}`}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-500"

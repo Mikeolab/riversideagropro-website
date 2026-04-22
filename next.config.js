@@ -6,6 +6,10 @@ const basePath = process.env.BASE_PATH || ''
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
+  // GitHub project Pages serves the site at /<repo>/; next/image can omit basePath for files in /public on static export.
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   ...(basePath ? { basePath } : {}),
   images: {
     unoptimized: true,
